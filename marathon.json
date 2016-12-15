@@ -1,0 +1,61 @@
+{
+  "id": "/webdemo",
+  "cmd": null,
+  "cpus": 0.2,
+  "mem": 500,
+  "disk": 0,
+  "instances": 2,
+  "acceptedResourceRoles": [
+    "slave_public"
+  ],
+  "container": {
+    "type": "DOCKER",
+    "volumes": [],
+    "docker": {
+      "image": "kejing/webdemo",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "hostPort": 0,
+          "protocol": "tcp",
+          "labels": {}
+        }
+      ],
+      "privileged": false,
+      "parameters": [],
+      "forcePullImage": false
+    }
+  },
+  "labels":{
+    "HAPROXY_GROUP": "external",
+    "HAPROXY_0_VHOST": "kj187a.southeastasia.cloudapp.azure.com"
+  },
+  "env": {
+    "dirver": "com.mysql.jdbc.Driver",
+    "url": "jdbc:mysql://marathon-lb.marathon.mesos:10011/dbdemo?characterEncoding=UTF-8&amp;characterSetResults=UTF-8",
+    "user": "kejing",
+    "password": "kejing123"
+  },
+  "healthChecks": [
+    {
+      "path": "/",
+      "protocol": "HTTP",
+      "portIndex": 0,
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+      "ignoreHttp1xx": false
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 10004,
+      "protocol": "tcp",
+      "labels": {
+            "VIP_0": "/webdemo:8080"
+      }
+    }
+  ]
+}
