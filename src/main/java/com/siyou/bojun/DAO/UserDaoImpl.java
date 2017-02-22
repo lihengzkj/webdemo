@@ -58,13 +58,33 @@ public class UserDaoImpl{
 		return user;
 	} 
 	
+	public UserBean getUserByUserID(String userid) {
+		
+		String sql = "select user_id,user_name,credits,login_status,privilege from t_user"
+				+ " where user_id= ?";
+		logger.info("query sql:"+sql);
+		final UserBean user = new UserBean();
+		
+		jdbcTemplate.query(sql, new Object[]{userid }, new RowCallbackHandler(){
+
+			public void processRow(ResultSet rs) throws SQLException {
+				user.setUserid(rs.getInt("user_id"));
+				user.setUserName(rs.getString("user_name"));
+				user.setCredits(rs.getInt("credits"));
+				user.setLoginStatus(rs.getString("login_status"));
+				user.setPrivilege(rs.getString("privilege"));
+			}});
+		
+		return user;
+	} 
+	
 	
 	/**
 	 * 获取制定语言环境的所有新闻
 	 * @param language
 	 * @return
 	 */
-	public PageBean<UserBean> getAllUser(String language){
+	public PageBean<UserBean> getAllUser(){
 		String tableName = "t_user";
 		String sql = "select user_id,user_name,credits,password,last_visit,last_ip,login_status,privilege from "+tableName;
 		logger.info("getAllNews >> sql:"+sql);
@@ -112,7 +132,11 @@ public class UserDaoImpl{
 	 */
 	public void addUser(UserBean user){
 		String sql = "insert into t_user(user_name,credits,password,login_status,privilege)values(?,?,?,?,?)";
-		jdbcTemplate.update(sql, new Object[]{user.getUserName(),user.getCredits(),user.getPzssword(),user.getLoginStatus(),user.getPrivilege()});
+		jdbcTemplate.update(sql, new Object[]{user.getUserName(),
+												user.getCredits()==0?10:user.getCredits(),
+														user.getPzssword()==null?user.getUserName():user.getPzssword(),
+																user.getLoginStatus()==null?"F":user.getLoginStatus(),
+																		user.getPrivilege()});
 		logger.info("Add user >> id:"+user.getUserid()+" username:"+user.getUserName());
 	}
 	/**

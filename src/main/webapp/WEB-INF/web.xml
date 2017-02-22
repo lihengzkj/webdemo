@@ -3,9 +3,7 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>webdemo</display-name>
-  
-  
+  <display-name>webdemo</display-name> 
 	  	<!--start: 解决 JNDI lookup for name [spring.profiles.active] threw NamingException with message: null. Returning null.-->
 	    <context-param>  
 		    <param-name>spring.profiles.active</param-name>  
@@ -81,5 +79,9 @@
 	  	<servlet-name>dispatcher</servlet-name>
 	  	<url-pattern>*.html</url-pattern>
 	  </servlet-mapping>
+	  
+	  <welcome-file-list>
+	  	<welcome-file>/webdemo/views/index.html</welcome-file>
+	  </welcome-file-list>
 	  
 </web-app>
