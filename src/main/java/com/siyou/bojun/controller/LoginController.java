@@ -77,7 +77,7 @@ public class LoginController {
 		}
 		request.setAttribute("language", language, WebRequest.SCOPE_REQUEST);
 		
-		PageBean<UserBean> page = userdao.getAllUser(language);
+		PageBean<UserBean> page = userdao.getAllUser();
 		
 		request.setAttribute("page", page, WebRequest.SCOPE_REQUEST);
 		

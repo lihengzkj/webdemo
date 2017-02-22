@@ -88,8 +88,7 @@
  							<hr />
  							<div> 
  							
-								
-								<h1>E</h1>
+ 							
  								<table style="width:100%;text-align:center;">
 									<thead>
 										<tr>
